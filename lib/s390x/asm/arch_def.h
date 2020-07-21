@@ -10,21 +10,30 @@
 #ifndef _ASM_S390X_ARCH_DEF_H_
 #define _ASM_S390X_ARCH_DEF_H_
 
+#include <linux/const.h>
+
 struct psw {
 	uint64_t	mask;
 	uint64_t	addr;
 };
 
-#define PSW_MASK_EXT			0x0100000000000000UL
-#define PSW_MASK_IO			0x0200000000000000UL
-#define PSW_MASK_DAT			0x0400000000000000UL
-#define PSW_MASK_WAIT			0x0002000000000000UL
-#define PSW_MASK_PSTATE			0x0001000000000000UL
+/*
+ * Old binutils are not happy with the UL suffix so we need to use
+ * UL(). Once RHEL 7 support is dropped we can remove this again.
+ */
 
-#define CR0_EXTM_SCLP			0x0000000000000200UL
-#define CR0_EXTM_EXTC			0x0000000000002000UL
-#define CR0_EXTM_EMGC			0x0000000000004000UL
-#define CR0_EXTM_MASK			0x0000000000006200UL
+#define UL(x)		(_AC(x, UL))
+
+#define PSW_MASK_EXT			UL(0x0100000000000000)
+#define PSW_MASK_IO			UL(0x0200000000000000)
+#define PSW_MASK_DAT			UL(0x0400000000000000)
+#define PSW_MASK_WAIT			UL(0x0002000000000000)
+#define PSW_MASK_PSTATE			UL(0x0001000000000000)
+
+#define CR0_EXTM_SCLP			UL(0x0000000000000200)
+#define CR0_EXTM_EXTC			UL(0x0000000000002000)
+#define CR0_EXTM_EMGC			UL(0x0000000000004000)
+#define CR0_EXTM_MASK			UL(0x0000000000006200)
 
 struct lowcore {
 	uint8_t		pad_0x0000[0x0080 - 0x0000];	/* 0x0000 */
